@@ -13,6 +13,10 @@ import javax.net.ssl.HttpsURLConnection;
 
 import org.omg.CORBA.portable.InputStream;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonToken;
+
 import oauth.signpost.OAuth;
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.OAuthProvider;
@@ -74,6 +78,7 @@ public class test1 {
 				+ request.getResponseMessage());
 
 		print_content(request);
+		
 
 		//récupération d'un fichier
 		System.out.println("\n-----------------------NEW REQUEST-----------------------");
@@ -109,6 +114,8 @@ public class test1 {
 		print_content(request3);
 		
 
+		
+
 	}
 
 
@@ -125,6 +132,14 @@ public class test1 {
 				String input;
 
 				while ((input = br.readLine()) != null){
+					System.out.println("******TEST JSON OBJECT ******");
+					JsonFactory factory = new JsonFactory();
+					JsonParser parser = factory.createParser(input);
+					
+					
+					while(parser.nextToken()!=JsonToken.END_OBJECT){
+						System.out.println(parser.getCurrentName() + " " + parser.getValueAsString());
+					}
 					System.out.println(input);
 				}
 				br.close();
