@@ -1,0 +1,119 @@
+{
+
+    "cloud": [
+ 
+       {
+
+            "name": "",
+
+            "appSecret": "123456",
+
+            "appKey": "258741",
+
+            "token1": "654efcae6565",
+
+            "token2": "987aefd964bc",
+
+            "maxStorage": "20M",
+
+            "availableStorage": "19M",
+
+            "file": [
+
+                {
+
+                    "nameFile": "1210",
+
+                    "checksum": "149856ead6466fc"
+
+                },
+
+                {
+
+                    "nameFile": "1010",
+
+                    "checksum": "1478ead8966efb6"
+                }
+
+            ]
+
+        },
+
+        {
+
+            "name": "",
+
+            "appSecret": "989fhf",
+
+            "appKey": "946hgc",
+
+            "token1": "654efcae6565",
+
+            "token2": "987aefd964bc",
+
+            "maxStorage": "20M",
+
+            "availableStorage": "19M",
+
+            "file": [
+
+                {
+
+                    "nameFile": "1211",
+
+                    "checksum": "149856ead6466fc"
+
+                },
+                {
+
+                    "nameFile": "1011",
+
+                    "checksum": "1478ead8966efb6"
+
+                }
+
+            ]
+
+        }
+
+    ],
+
+    "webdav": [
+
+        {
+
+            "name": "",
+
+            "id": "my_id",
+
+            "password": "258741",
+
+            "maxStorage": "20M",
+
+            "availableStorage": "19M",
+
+            "file": [
+
+                {
+
+                    "nameFile": "1212",
+
+                    "checksum": "149856ead6466fc"
+
+                },
+
+                {
+
+                    "nameFile": "1012",
+
+                    "checksum": "1478ead8966efb6"
+
+                }
+
+            ]
+
+        }
+
+    ]
+
+}
