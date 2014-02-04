@@ -22,14 +22,14 @@ public class Splitter {
 		for(int i=0; i<nbrOfPackets-1; i++){
 			packets[i] = new Packet();
 			data = new byte[size];
-			stream.read(data, 0, 0);
+			stream.read(data, 0, size);
 			packets[i].setData(data);
 			packets[i].setChecksum(getChecksum(data));
 			packets[i].setName(fileId+""+i);
 		}
 		packets[nbrOfPackets-1] = new Packet();
 		data = new byte[(int) (file.length()-size*(nbrOfPackets-1.))];
-		stream.read(data, 0, 0);
+		stream.read(data, 0, data.length);
 		packets[nbrOfPackets-1].setData(data);
 		packets[nbrOfPackets-1].setChecksum(getChecksum(data));
 		packets[nbrOfPackets-1].setName(fileId+""+(nbrOfPackets-1));
