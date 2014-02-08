@@ -6,7 +6,8 @@ public class Packet {
 	private byte[] data;
 	private String cloud;
 	private String checksum;
-	
+	private String extension;
+
 	public String getCloud() {
 		return cloud;
 	}
@@ -31,6 +32,12 @@ public class Packet {
 	public void setChecksum(String checksum) {
 		this.checksum = checksum;
 	}
-	
-	
+	public String getExtension() {
+		return extension;
+	}
+	public void setExtension(String extension) {
+		this.extension = extension;
+	}
+
+
 }

@@ -1,10 +1,9 @@
 package connection;
 
-import java.io.File;
-
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.OAuthProvider;
 import utilities.Cloud;
+import utilities.Packet;
 
 public class ProviderCloud implements Provider{
 
@@ -14,22 +13,28 @@ public class ProviderCloud implements Provider{
 		
 	}
 	
-	@Override
-	public void upload(File file) {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public File download(String name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public void connect() {
 		// TODO Auto-generated method stub
 		
+	}
+
+
+
+	@Override
+	public void upload(Packet packet) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public Packet download(String name) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

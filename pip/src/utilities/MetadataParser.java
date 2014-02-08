@@ -2,35 +2,64 @@ package utilities;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.TreeMap;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
- * DEPRECATED => you must use MetadataParser instead 
  * The object Metadata manage the access to a file JSON with the list of storage devices used (Cloud and Webdav server) and their characteristics.
  * @author hanane
  *
  */
-public class Metadata{
+public class MetadataParser{
 
 	private String metadataPath;
+	private ObjectMapper mapper;
+	private JsonNode root;
 
-	public Metadata(String metadataPath){
-		// TODO remove comment b_slash
-		//this.metadataPath = metadataPath;
+	public MetadataParser(String metadataPath){
+		//this.metadataPath = metadataPath; // TODO remove comment in final code
 		this.metadataPath = "D:/PIPworkspace/pipCopy/metadata/metadataStorage.json"; //for tests only
-	}
-
-	public boolean addFile(String nameFile, Packet[] packets){
 		FileInputStream fileStream;
+		try {
+			fileStream = new FileInputStream(this.metadataPath);
+			 mapper = new ObjectMapper();
+			 root = mapper.readTree(fileStream);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public TreeMap<String,String> searchWebdav(String name){
+		TreeMap<String,String> result = new TreeMap<String,String>();
+		JsonNode aNode = root.findPath(name);
+		Iterator<String> list = aNode.fieldNames();
+		JsonNode current;
+		String st;
+		while(list.hasNext()){
+			st = list.next();
+			current = aNode.findValue(st);
+			System.out.println("\t\t" + st + " " + current.asText());
+			result.put(st, current.asText());
+		}
+		return result;
+		
+	}
+	
+	public boolean addFile(String nameFile, Packet[] packets){
 		int numOfFiles;
 		try {
-			fileStream = new FileInputStream("D:/PIPworkspace/pipCopy/metadata/metadataStorage.json");
-			ObjectMapper mapper = new ObjectMapper();
-			JsonNode root = mapper.readTree(fileStream);
 			
 			JsonNode fileNode = root.findPath("file");
 			numOfFiles = fileNode.path("numOfFiles").intValue();

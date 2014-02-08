@@ -1,10 +1,10 @@
 package connection;
 
-import java.io.File;
+import utilities.Packet;
 
 public interface Provider {
 
-	public void upload(File file);
-	public File download(String name);
+	public void upload(Packet packet);
+	public Packet download(String name);
 	public void connect();
 }
