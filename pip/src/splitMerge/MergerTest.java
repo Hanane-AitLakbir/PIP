@@ -27,7 +27,7 @@ public class MergerTest {
 		}
 		
 		try {
-			Merger.merge("C:/Users/aït-lakbir/Desktop/PIPTest/testMerge.txt", packets);
+			Merger.merge("C:/Users/Ludovic/Desktop/testMerge.txt", packets);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

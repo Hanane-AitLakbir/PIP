@@ -16,7 +16,8 @@ public class Splitter {
 		File file = new File(fileName);
 		assert(file.isFile());
 		//TODO throw exception
-		int size = (int) (file.length()/nbrOfPackets + 1);
+		int size = (int) (file.length()/nbrOfPackets);
+		System.out.println(file.length()+" "+size);
 		FileInputStream stream = new FileInputStream(file);
 		byte[] data;
 		for(int i=0; i<nbrOfPackets-1; i++){
