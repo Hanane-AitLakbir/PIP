@@ -34,8 +34,8 @@ public class JSonSerializer implements MetadataSerializer{
 	}
 	
 	@Override
-	public Metadata deserialize(File file) {
-		this.metadataPath = "D:/PIPworkspace/pipCopy/metadata/metadataStorage.json"; //for tests only
+	public Metadata deserialize() {
+		//this.metadataPath = "D:/PIPworkspace/pipCopy/metadata/metadataStorage.json"; //for tests only
 		FileInputStream fileStream;
 		try {
 			fileStream = new FileInputStream(this.metadataPath);
@@ -76,21 +76,8 @@ public class JSonSerializer implements MetadataSerializer{
 		
 	}
 	public JSonSerializer(String metadataPath){
-		//this.metadataPath = metadataPath; // TODO remove comment in final code
-		this.metadataPath = "D:/PIPworkspace/pipCopy/metadata/metadataStorage.json"; //for tests only
-		FileInputStream fileStream;
-		try {
-			fileStream = new FileInputStream(this.metadataPath);
-			mapper = new ObjectMapper();
-			root = mapper.readTree(fileStream);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
+		this.metadataPath = metadataPath; // TODO remove comment in final code
+		//this.metadataPath = "D:/PIPworkspace/pipCopy/metadata/metadataStorage.json"; //for tests only
 	}
 
 //----------------------------------------------------------------------
