@@ -1,18 +1,17 @@
 package utilities;
 
+import metadata.MetadataPacket;
+
 public class Packet {
 
 	private String name;
 	private byte[] data;
-	private String cloud;
-	private String checksum;
-	private String extension;
-
-	public String getCloud() {
-		return cloud;
+	public Packet(String name,byte[] data){
+		this.name = name;
+		this.data = data;
 	}
-	public void setCloud(String cloud) {
-		this.cloud = cloud;
+	public MetadataPacket getMetadata() {
+		return new MetadataPacket(ComputeChecksum.getChecksum(data), name);
 	}
 	public byte[] getData() {
 		return data;
@@ -23,21 +22,10 @@ public class Packet {
 	public String getName() {
 		return name;
 	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getChecksum() {
-		return checksum;
-	}
-	public void setChecksum(String checksum) {
-		this.checksum = checksum;
-	}
-	public String getExtension() {
-		return extension;
-	}
-	public void setExtension(String extension) {
-		this.extension = extension;
-	}
 
+	public String getExtension(){
+		return name.substring(name.lastIndexOf(".")+1);
+	}
 
 }
+

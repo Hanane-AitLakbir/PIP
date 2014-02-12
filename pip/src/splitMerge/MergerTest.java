@@ -17,17 +17,15 @@ public class MergerTest {
 		Packet p;
 		String word,letter;
 		for(int i=0;i<6;i++){
-			p = new Packet();
-			p.setName(("packet"+i));
+			
 			//made "a l'arrache", I will improve it later
 			letter = String.valueOf(i);
 			word = letter + letter + letter + letter ;
-			p.setData(word.getBytes());
-			packets[i] = p;
+			packets[i] = new Packet("packet"+i,word.getBytes());
 		}
 		
 		try {
-			Merger.merge("C:/Users/Ludovic/Desktop/testMerge.txt", packets);
+			Merger.merge("C:/Users/aït-lakbir/Desktop/PIPTest/testMerge.txt", packets);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

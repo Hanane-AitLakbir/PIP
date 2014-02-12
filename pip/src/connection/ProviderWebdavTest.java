@@ -14,16 +14,22 @@ public class ProviderWebdavTest {
 		assertEquals("aTesSouhait", name.substring(0, name.lastIndexOf('.')));
 		assertEquals("jpeg",name.substring(name.lastIndexOf('.')+1, name.length()));
 	}
-	
+
 	@Test
 	public void testDownloadFile(){
 		ProviderWebdav provider = new ProviderWebdav("account1");
-		provider.connect();
-		Packet packet = provider.download("firstFileUploaded.txt");
-		assertEquals("txt", packet.getExtension());
-		assertEquals("firstFileUploaded", packet.getName());
-		System.out.println( new String(packet.getData()));
-		
+		Packet packet;
+		try {
+			provider.connect();
+			packet = provider.download("firstFileUploaded.txt");
+			assertEquals("txt", packet.getExtension());
+			assertEquals("firstFileUploaded", packet.getName());
+			System.out.println( new String(packet.getData()));
+		} catch (CloudNotAvailableException e) {
+			e.printStackTrace();
+		}
+
+
 	}
 
 }

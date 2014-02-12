@@ -1,4 +1,4 @@
-package utilities;
+package metadata;
 
 import java.util.TreeMap;
 
@@ -8,8 +8,8 @@ public class MetadataParserTest {
 
 	@Test
 	public void testSearchWebdav() {
-		MetadataParser parser = new MetadataParser("");
-		TreeMap<String, String> map =parser.searchWebdav("account1");
+		JSonSerializer parser = new JSonSerializer("");
+		TreeMap<String, String> map =parser.searchWebdav("dropbox");
 		System.out.println(map);
 		System.out.println("parsing done");
 	}

@@ -7,6 +7,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
+import metadata.JSonSerializer;
+
 import org.apache.commons.httpclient.Credentials;
 import org.apache.commons.httpclient.HostConfiguration;
 import org.apache.commons.httpclient.HttpClient;
@@ -21,7 +23,6 @@ import org.apache.commons.httpclient.methods.RequestEntity;
 import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
 import org.apache.jackrabbit.webdav.client.methods.PutMethod;
 
-import utilities.MetadataParser;
 import utilities.Packet;
 
 public class ProviderWebdav implements Provider {
@@ -34,7 +35,7 @@ public class ProviderWebdav implements Provider {
 	}
 
 	@Override
-	public void connect() {
+	public void connect() throws CloudNotAvailableException {
 		HostConfiguration hostConfig = new HostConfiguration();
 		hostConfig.setHost("http://localhost/owncloud/remote.php/webdav/"); 
 		HttpConnectionManager connectionManager = new MultiThreadedHttpConnectionManager();
@@ -50,8 +51,8 @@ public class ProviderWebdav implements Provider {
 	}
 
 	@Override
-	public void upload(Packet packet) {
-		PutMethod upload = new PutMethod("http://localhost/owncloud/remote.php/webdav/" + packet.getName() + packet.getExtension());
+	public void upload(Packet packet) throws CloudNotAvailableException{
+		PutMethod upload = new PutMethod("http://localhost/owncloud/remote.php/webdav/" + packet.getName());
 		File f;
 		try {
 			f = File.createTempFile(packet.getName(), ".tmp");
@@ -66,18 +67,17 @@ public class ProviderWebdav implements Provider {
 				System.out.println(upload.getStatusCode() + " "+ upload.getStatusText());
 				upload.releaseConnection();
 			}
+			
 		} catch (IOException e1) {
-			e1.printStackTrace();
+			throw new CloudNotAvailableException();
 		}
 
 
 	}
 
 	@Override
-	public Packet download(String name) {
-		Packet packet = new Packet();
-		packet.setName(name.substring(0, name.lastIndexOf('.')));
-		packet.setExtension(name.substring(name.lastIndexOf('.')+1, name.length()));
+	public Packet download(String name) throws CloudNotAvailableException{
+		Packet packet=null;
 		String url = "http://localhost/owncloud/remote.php/webdav/"+name;
 		System.out.println(url);
 		GetMethod httpMethod = new GetMethod(url);
@@ -102,18 +102,18 @@ public class ProviderWebdav implements Provider {
 			for(int i = 0;i<data.length;i++){
 				data[i] = dataList.get(i);
 			}
-
-			packet.setData(data);
+			packet = new Packet(name.substring(0, name.lastIndexOf('.')),data);
 		} catch (HttpException e) {
-			e.printStackTrace();
+			throw new CloudNotAvailableException();
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new CloudNotAvailableException();
 		}
+		
 		return packet;
 	}
 
 	private TreeMap<String,String> getId(){
-		return new MetadataParser("").searchWebdav(serverName);
+		return new JSonSerializer("").searchWebdav(serverName);
 	}
 }
 

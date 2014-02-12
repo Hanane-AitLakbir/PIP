@@ -7,17 +7,19 @@ import utilities.Packet;
 
 public class ProviderCloud implements Provider{
 
-	OAuthConsumer consumer;
-	OAuthProvider provider;
-	public ProviderCloud(Cloud cloud) {
-		
+	private OAuthConsumer consumer;
+	private OAuthProvider provider;
+	private String nameCloud; 
+	
+	public ProviderCloud(String nameCloud) {
+		this.nameCloud = nameCloud;
 	}
 	
 
 
 	@Override
 	public void connect() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 

@@ -16,7 +16,7 @@ public class SplitterTest {
 		 * For the test, you need to create a file .txt with '0000111122223333'. You should get 4 packets '0000' '1111' '2222' '3333'
 		 */
 			try {
-				Packet[] packets = Splitter.split(1, "C:/Users/Ludovic/Desktop/testSplit.txt", 6);
+				Packet[] packets = Splitter.split(1, "C:/Users/aït-lakbir/Desktop/PIPTest/testSplit.txt", 4);
 				for(Packet p : packets){
 					System.out.println("packet : " + p.getName());
 					System.out.println(new String(p.getData()));
