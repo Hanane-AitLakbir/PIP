@@ -79,6 +79,8 @@ public class test1 {
 		consumer.sign(request);
 
 		System.out.println("Sending request...");
+		System.out.println("Access token: " + consumer.getToken());
+		System.out.println("Token secret: " + consumer.getTokenSecret());
 		request.connect();
 
 		System.out.println("Response: " + request.getResponseCode() + " "

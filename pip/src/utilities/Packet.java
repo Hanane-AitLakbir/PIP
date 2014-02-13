@@ -1,6 +1,6 @@
 package utilities;
 
-import metadata.MetadataPacket;
+import metadata.Metadata;
 
 public class Packet {
 
@@ -10,8 +10,11 @@ public class Packet {
 		this.name = name;
 		this.data = data;
 	}
-	public MetadataPacket getMetadata() {
-		return new MetadataPacket(ComputeChecksum.getChecksum(data), name);
+	public Metadata getMetadata() {
+		Metadata meta = new Metadata();
+		meta.addContent("name", name);
+		meta.addContent("checksum", ComputeChecksum.getChecksum(data));
+		return meta;
 	}
 	public byte[] getData() {
 		return data;

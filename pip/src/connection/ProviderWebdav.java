@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.TreeMap;
 
 import metadata.JSonSerializer;
+import metadata.Metadata;
 
 import org.apache.commons.httpclient.Credentials;
 import org.apache.commons.httpclient.HostConfiguration;
@@ -52,21 +53,36 @@ public class ProviderWebdav implements Provider {
 
 	@Override
 	public void upload(Packet packet) throws CloudNotAvailableException{
+		Metadata meta = packet.getMetadata();
+		File mFile;
 		PutMethod upload = new PutMethod("http://localhost/owncloud/remote.php/webdav/" + packet.getName());
+		PutMethod uploadMeta = new PutMethod("http://localhost/owncloud/remote.php/webdav/" + packet.getName()+".json");
 		File f;
 		try {
+			mFile = File.createTempFile("meta", ".tmp");
 			f = File.createTempFile(packet.getName(), ".tmp");
+			meta.serialize(mFile.getPath());
+			
 			FileOutputStream output = new FileOutputStream(f);
+			
 			output.write(packet.getData());
 			output.close();
 
-			if(f.exists()) {
+			if(f.exists() && mFile.exists()) {
+				//Sending of the packet file
 				RequestEntity requestEntity = new FileRequestEntity(f,packet.getExtension());
 				upload.setRequestEntity(requestEntity);
 				client.executeMethod(upload);
 				System.out.println(upload.getStatusCode() + " "+ upload.getStatusText());
 				upload.releaseConnection();
+				//Sending of the metadata file
+				RequestEntity requestEntity2 = new FileRequestEntity(mFile,".json");
+				uploadMeta.setRequestEntity(requestEntity2);
+				client.executeMethod(uploadMeta);
+				System.out.println(uploadMeta.getStatusCode() + " "+ uploadMeta.getStatusText());
+				uploadMeta.releaseConnection();
 			}
+			
 			
 		} catch (IOException e1) {
 			throw new CloudNotAvailableException();
@@ -113,7 +129,11 @@ public class ProviderWebdav implements Provider {
 	}
 
 	private TreeMap<String,String> getId(){
-		return new JSonSerializer("").searchWebdav(serverName);
+		TreeMap<String, String> tree = new TreeMap<String,String>();
+		Metadata meta = new JSonSerializer("C:/Users/aït-lakbir/Desktop/PIPTest/cloud/"+serverName+".json").deserialize();
+		tree.put("id", meta.browse("id"));
+		tree.put("password", meta.browse("password"));
+		return tree;
 	}
 }
 
