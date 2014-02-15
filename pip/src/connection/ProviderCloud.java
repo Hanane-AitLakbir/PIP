@@ -1,10 +1,13 @@
 package connection;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.DataInput;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
@@ -115,6 +118,7 @@ public class ProviderCloud implements Provider{
 			packet.getMetadata().serialize(mFile.getPath());
 
 			DataOutputStream metaStream = new  DataOutputStream(request2.getOutputStream());
+			
 			metaStream.write(Files.readAllBytes(Paths.get(mFile.getPath()))); //sends the rest of the file
 			System.out.println("Response: " + request2.getResponseCode() + " "
 					+ request2.getResponseMessage());
@@ -139,25 +143,39 @@ public class ProviderCloud implements Provider{
 	public Packet download(String name) throws CloudNotAvailableException{
 
 		Metadata metadata = new JSonSerializer("C:/Users/aït-lakbir/Desktop/PIPTest/cloud/"+nameCloud+".json").deserialize();
-		URL url;
+		URL url,url2;
+		Packet packet=null;
 		try {
-			url = new URL(metadata.browse("download"));
+			url = new URL(metadata.browse("download")+name);
+			url2 =new URL(metadata.browse("download")+name+".json");
+			
 			HttpURLConnection request = (HttpURLConnection) url.openConnection();
+			HttpURLConnection request2 = (HttpURLConnection) url2.openConnection();
+			
 			OAuthConsumer consumer = new DefaultOAuthConsumer(metadata.browse("app_key"),metadata.browse("app_secret"));
 			consumer.setTokenWithSecret(metadata.browse("tokenA"), metadata.browse("tokenS"));
-			
+
 			request.setDoOutput(true);
+			request2.setDoOutput(true);
 
 			request.setRequestMethod("GET");
 			request.addRequestProperty("rev", "");
+			
+			request2.setRequestMethod("GET");
+			request2.addRequestProperty("rev", "");
 
 			consumer.sign(request);
+			consumer.sign(request2);
 			System.out.println("Sending request...");
 			request.connect();
+			request2.connect();
 
 			DataInputStream inputStream = new DataInputStream(request.getInputStream());
+			DataInputStream metaStream = new DataInputStream(request2.getInputStream());
+
+			packet = new Packet(name,toByteArray(inputStream));
+			packet.setMetadata(new JSonSerializer().deserializeStream(metaStream));
 			
-			//TODO add creation of Packet
 			System.out.println("Response: " + request.getResponseCode() + " "
 					+ request.getResponseMessage());
 
@@ -175,7 +193,17 @@ public class ProviderCloud implements Provider{
 			throw new CloudNotAvailableException();
 		}
 
-		return null;
+		
+		return packet;
 	}
 
+	private byte[] toByteArray(DataInputStream is) throws IOException{
+		ByteArrayOutputStream baos = new ByteArrayOutputStream(); 
+		int reads = is.read();
+		while(reads != -1){ 
+			baos.write(reads); 
+			reads = is.read();
+		}
+		return baos.toByteArray();
+	}
 }

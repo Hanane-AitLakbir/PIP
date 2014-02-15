@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Iterator;
 import java.util.TreeMap;
 
@@ -35,13 +36,27 @@ public class JSonSerializer implements MetadataSerializer{
 	
 	@Override
 	public Metadata deserialize() {
-		//this.metadataPath = "D:/PIPworkspace/pipCopy/metadata/metadataStorage.json"; //for tests only
 		FileInputStream fileStream;
 		try {
 			fileStream = new FileInputStream(this.metadataPath);
-			//fileStream = new FileInputStream(file); //TODO uncomment in the final code
 			mapper = new ObjectMapper();
 			root = mapper.readTree(fileStream);
+			return new Metadata(this);
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public Metadata deserializeStream(InputStream stream){
+		try {
+			mapper = new ObjectMapper();
+			root = mapper.readTree(stream);
 			return new Metadata(this);
 			
 		} catch (FileNotFoundException e) {
@@ -76,9 +91,10 @@ public class JSonSerializer implements MetadataSerializer{
 		
 	}
 	public JSonSerializer(String metadataPath){
-		this.metadataPath = metadataPath; // TODO remove comment in final code
-		//this.metadataPath = "D:/PIPworkspace/pipCopy/metadata/metadataStorage.json"; //for tests only
+		this.metadataPath = metadataPath;
 	}
+	
+	
 
 //----------------------------------------------------------------------
 

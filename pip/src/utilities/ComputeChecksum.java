@@ -5,11 +5,11 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class ComputeChecksum {
- static String getChecksum(File file){
-	return null; 
- }
- static String getChecksum(byte[] data){
-	 MessageDigest md;
+	public static String getChecksum(File file){
+		return null; 
+	}
+	public static String getChecksum(byte[] data){
+		MessageDigest md;
 		try {
 			md = MessageDigest.getInstance("SHA1");
 			md.update(data);
@@ -24,5 +24,5 @@ public class ComputeChecksum {
 			e.printStackTrace();
 		}
 		return null;
- }
+	}
 }
