@@ -5,12 +5,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Iterator;
-import java.util.TreeMap;
-
-import utilities.Packet;
-
-import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -97,7 +91,7 @@ public class JSonSerializer implements MetadataSerializer{
 	
 
 //----------------------------------------------------------------------
-
+/*
 	public TreeMap<String,String> searchWebdav(String name){
 		TreeMap<String,String> result = new TreeMap<String,String>();
 		JsonNode aNode = root.findPath(name);
@@ -163,14 +157,13 @@ public class JSonSerializer implements MetadataSerializer{
 		}
 
 	}
-	private void createNodeFromPacket(JsonNode parentNode, Packet packet){
-		ObjectNode newPacket = ((ObjectNode) parentNode).putObject(packet.getName());
-		//newPacket.put("checksum", packet.getChecksum());
-	}
+//	private void createNodeFromPacket(JsonNode parentNode, Packet packet){
+//		ObjectNode newPacket = ((ObjectNode) parentNode).putObject(packet.getName());
+//		//newPacket.put("checksum", packet.getChecksum());
+//	}
 
 	@Override
 	public File serialize(MetadataElement element, String path) {
-		JsonFactory factory = new JsonFactory();
 		File file = null;
 		try {
 			file = File.createTempFile(path.substring(0, path.lastIndexOf(".")), ".tmp");
@@ -189,5 +182,5 @@ public class JSonSerializer implements MetadataSerializer{
 	}
 
 	
-
+*/
 }

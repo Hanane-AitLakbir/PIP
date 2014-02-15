@@ -1,7 +1,6 @@
 package connection;
 
-import static org.junit.Assert.*;
-import metadata.Metadata;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 

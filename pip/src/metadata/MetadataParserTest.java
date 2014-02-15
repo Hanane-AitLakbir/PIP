@@ -1,11 +1,7 @@
 package metadata;
 
-import java.util.TreeMap;
-
-import org.junit.Test;
-
 public class MetadataParserTest {
-
+/*
 	@Test
 	public void testSearchWebdav() {
 		JSonSerializer parser = new JSonSerializer("");
@@ -13,5 +9,5 @@ public class MetadataParserTest {
 		System.out.println(map);
 		System.out.println("parsing done");
 	}
-
+*/
 }
