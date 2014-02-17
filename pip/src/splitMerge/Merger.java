@@ -10,7 +10,6 @@ public class Merger {
 
 	public static File merge(String name, Packet[] packets) throws IOException{
 		File file = new File(name);
-		//file creation... is it a problem ?
 		file.createNewFile();
 		FileOutputStream writer = new FileOutputStream(file, true);
 		for(int i=0; i<packets.length; i++){
