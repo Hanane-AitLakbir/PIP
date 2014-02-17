@@ -8,7 +8,7 @@ import connection.CloudNotAvailableException;
 import connection.Provider;
 import connection.ProviderCloud;
 import connection.ProviderWebdav;
-import encoding.Encoder;
+import coding.Coder;
 import splitMerge.Splitter;
 import utilities.Packet;
 import allocation.AllocationStrategy;
@@ -18,14 +18,14 @@ public class Main {
 		String fileName = "testTexte.txt";
 		String filePath = "files test/" + fileName;
 		AllocationStrategy strategy;
-		Encoder coder;
+		Coder coder;
 		Provider provider = new ProviderCloud("dropbox");
 		Metadata fileList = new Metadata();
 		
 		try {
 			//sending the file
 			fileList.addContent("1234",fileName);
-			Packet[] packets = Splitter.split(1234,filePath,4);
+			Packet[] packets = Splitter.split(filePath,4);
 			//provider.connect();
 			for(Packet p : packets){
 				provider.upload(p);

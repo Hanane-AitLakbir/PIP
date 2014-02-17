@@ -32,7 +32,7 @@ public class ComputeChecksum {
 		}
 		return null;
  }
- static String getChecksum(byte[] data){
+ public static String getChecksum(byte[] data){
 	 MessageDigest md;
 		try {
 			md = MessageDigest.getInstance("SHA1");
