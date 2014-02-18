@@ -1,7 +1,9 @@
-package encoding;
+package coding;
 
-public interface Encoder {
+import utilities.Packet;
 
-	public void encode();
-	public void decode();
+public interface Coder {
+
+	public Packet[] encode(Packet[] packets);
+	public Packet[] decode(Packet[] packets);
 }
