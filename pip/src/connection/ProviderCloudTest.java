@@ -1,7 +1,5 @@
 package connection;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
 
 import utilities.ComputeChecksum;
