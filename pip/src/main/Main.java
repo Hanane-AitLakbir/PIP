@@ -1,43 +1,48 @@
 package main;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+import metadata.Metadata;
+import connection.CloudNotAvailableException;
+import connection.Provider;
+import connection.ProviderCloud;
+import connection.ProviderWebdav;
 import coding.Coder;
 import coding.EmptyCoder;
+import splitMerge.Splitter;
+import utilities.Packet;
 import allocation.AllocationStrategy;
 import allocation.ChosenCloud;
 
 public class Main {
 	public static void main(String[] args) {
-		String fileName = "testTexte.txt";
-		String filePath = "files test/" + fileName;
+		if(args.length<4){
+			System.out.print("fileName filePath clouds ?");
+			try {
+				String line = new BufferedReader(new InputStreamReader(System.in)).readLine();
+				args = line.split("[ ]");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		String fileName = args[0];
+		String filePath = args[1] + "/" + fileName;
+		String[] clouds = new String[args.length-2];
+		for(int i=0; i<clouds.length; i++){
+			clouds[i] = args[i+2];
+		}
 		Coder coder = new EmptyCoder();
-		String[] listStorageLocation = new String[]{"dropbox"};
 		AllocationStrategy strategy = new ChosenCloud();
-
-		strategy.upLoad(fileName, 4, listStorageLocation, coder);
 		
-//		Provider provider = new ProviderCloud("dropbox");
-//		Metadata fileList = new Metadata();
-//		
-//		try {
-//			//sending the file
-//			fileList.addContent("1234",fileName);
-//			Packet[] packets = Splitter.split(filePath,4);
-//			//provider.connect();
-//			for(Packet p : packets){
-//				provider.upload(p);
-//			}
-//			fileList.serialize("metadata/files List.json");
-//			System.out.println("sending done");
-//			
-//			//upload the file
-//			
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		} catch (CloudNotAvailableException e) {
-//			e.printStackTrace();
-//		}
-		
+		try {
+			strategy.upLoad(filePath, 2*(clouds.length), clouds, coder);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
