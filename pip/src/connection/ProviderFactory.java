@@ -2,6 +2,7 @@ package connection;
 
 import metadata.JSonSerializer;
 import metadata.Metadata;
+import utilities.Packet;
 
 public class ProviderFactory {
 
@@ -28,6 +29,18 @@ public class ProviderFactory {
 			
 		}
 		return null;
+	}
+	
+	public static void main(String[] args) {
+		Provider provider = ProviderFactory.getProvider("account1");
+		Packet packet;
+		try {
+			provider.connect();
+			packet = provider.download("firstFileUploaded.txt");
+			System.out.println( new String(packet.getData()));
+		} catch (CloudNotAvailableException e) {
+			e.printStackTrace();
+		}
 	}
 	
 }
