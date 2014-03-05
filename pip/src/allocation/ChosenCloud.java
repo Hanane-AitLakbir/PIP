@@ -45,7 +45,7 @@ public class ChosenCloud implements AllocationStrategy{
 				clouds[i%nbrOfClouds] = askForCloud();
 			}
 		}
-		String name = fileName.substring(fileName.indexOf("/"), fileName.lastIndexOf(".")); //fileName gets the name of the folder
+		String name = fileName.substring(fileName.lastIndexOf("/"), fileName.lastIndexOf(".")); //fileName gets the name of the folder
 		metadata.serialize("metadata/files/"+name+".json");
 		return true;
 	}
